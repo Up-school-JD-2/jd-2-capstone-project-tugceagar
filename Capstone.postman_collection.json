@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "47332166-c639-4e04-ace3-91ebf139121e",
+		"name": "Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28772650"
+	},
+	"item": [
+		{
+			"name": "Airports",
+			"item": [
+				{
+					"name": "Get Airports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/airports",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Airports",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yassd havalaanı\",\r\n    \"location\" : \"antalya\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/airports",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Airports",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"es\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/airports/search",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airports",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Airlines",
+			"item": [
+				{
+					"name": "Get Airlines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/airlines",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Airlines",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pega\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/airlines",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Airlines",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"p\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/airlines/search",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"airlines",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Airline To Airport",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flights",
+			"item": [
+				{
+					"name": "Get Flights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/flights",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Flights",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration\": 60,\r\n    \"date\": \"2023-09-05\",\r\n    \"time\": \"14:30\",\r\n    \"routeId\": 1,\r\n    \" airlineId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/flights",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetFlightsByAirlineId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/flights/6/flights",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights",
+								"6",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post FlightByAirlineId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration\": 75,\r\n    \"date\": \"2023-09-05\",\r\n    \"time\": \"14:30\",\r\n    \"routeId\": 1\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/flights/2/createFlight",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights",
+								"2",
+								"createFlight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchFlightsByAirlineId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departureAirport\":\"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/flights/searchFlights?airlineId=4&from=antalya&to=adana",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights",
+								"searchFlights"
+							],
+							"query": [
+								{
+									"key": "airlineId",
+									"value": "4"
+								},
+								{
+									"key": "from",
+									"value": "antalya"
+								},
+								{
+									"key": "to",
+									"value": "adana"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchFlightsByRoute",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/flights/searchFlights",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"flights",
+								"searchFlights"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Routes",
+			"item": [
+				{
+					"name": "Get Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/routes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Routes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/routes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchRoutes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/routes/searchRoutes?from=ankara&to=adana",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"routes",
+								"searchRoutes"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "ankara"
+								},
+								{
+									"key": "to",
+									"value": "adana"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tickets",
+			"item": [
+				{
+					"name": "Get Tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/tickets",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Tickets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"price\" : 10.0,\r\n \"flightId\":2,\r\n \"cardRequest\":{\r\n     \"cardNumber\":\"4561564\",\r\n     \"ccv\":12,\r\n     \"expirationDate\":1,\r\n     \"expirationYear\":11\r\n\r\n },\r\n \"passengerRequest\":{\r\n     \"name\":\"Zeynep\",\r\n     \"surname\":\"Özdemir\",\r\n     \"tcNumber\":\"111111111\"\r\n }\r\n }\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/tickets",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchByTicketNumber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/tickets/83BXTU",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"83BXTU"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketCancel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/tickets/83BXTU",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"83BXTU"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
