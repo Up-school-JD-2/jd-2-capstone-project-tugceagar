@@ -20,5 +20,4 @@ public class TicketSaveResponse {
     private String arrivalLocation;
     private String departureLocation;
 
-
 }

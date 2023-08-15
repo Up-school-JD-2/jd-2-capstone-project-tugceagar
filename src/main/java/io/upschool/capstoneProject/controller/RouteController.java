@@ -1,8 +1,8 @@
 package io.upschool.capstoneProject.controller;
 
 import io.upschool.capstoneProject.dto.BaseResponse;
-import io.upschool.capstoneProject.dto.route.RouteSaveRequest;
-import io.upschool.capstoneProject.dto.route.RouteSaveResponse;
+import io.upschool.capstoneProject.dto.route.RouteRequest;
+import io.upschool.capstoneProject.dto.route.RouteResponse;
 import io.upschool.capstoneProject.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,19 +19,20 @@ public class RouteController {
     private final RouteService routeService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse<List<RouteSaveResponse>>> getRoutes(){
-        List<RouteSaveResponse> routes = routeService.getAllRoutes();
-        BaseResponse<List<RouteSaveResponse>> response = BaseResponse.<List<RouteSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<RouteResponse>>> getRoutes() {
+        List<RouteResponse> routes = routeService.getAllRoutes();
+        BaseResponse<List<RouteResponse>> response = BaseResponse.<List<RouteResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(routes)
                 .build();
         return ResponseEntity.ok(response);
     }
+
     @PostMapping
-    public ResponseEntity<Object> createAirports(@RequestBody RouteSaveRequest request) {
+    public ResponseEntity<Object> createAirports(@RequestBody RouteRequest request) {
         var routeResponse = routeService.save(request);
-        var response = BaseResponse.<RouteSaveResponse>builder()
+        var response = BaseResponse.<RouteResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .isSuccess(true)
                 .data(routeResponse)
@@ -42,11 +43,11 @@ public class RouteController {
 
 
     @GetMapping("/searchRoutes")
-    public ResponseEntity<BaseResponse<List<RouteSaveResponse>>> searchRoutesByNames(
+    public ResponseEntity<BaseResponse<List<RouteResponse>>> searchRoutesByNames(
             @RequestParam("from") String departureName,
             @RequestParam("to") String arrivalName) {
-        List<RouteSaveResponse> routes = routeService.searchRoutesByDepartureAndArrival(departureName, arrivalName);
-        BaseResponse<List<RouteSaveResponse>> response = BaseResponse.<List<RouteSaveResponse>>builder()
+        List<RouteResponse> routes = routeService.searchRoutesByDepartureAndArrival(departureName, arrivalName);
+        BaseResponse<List<RouteResponse>> response = BaseResponse.<List<RouteResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(routes)

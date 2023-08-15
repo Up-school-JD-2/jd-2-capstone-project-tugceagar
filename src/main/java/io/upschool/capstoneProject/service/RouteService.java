@@ -1,7 +1,7 @@
 package io.upschool.capstoneProject.service;
 
-import io.upschool.capstoneProject.dto.route.RouteSaveRequest;
-import io.upschool.capstoneProject.dto.route.RouteSaveResponse;
+import io.upschool.capstoneProject.dto.route.RouteRequest;
+import io.upschool.capstoneProject.dto.route.RouteResponse;
 import io.upschool.capstoneProject.entity.Airport;
 import io.upschool.capstoneProject.entity.Route;
 import io.upschool.capstoneProject.exception.AlreadySavedException;
@@ -24,16 +24,13 @@ public class RouteService {
 
     private final AirportService airportService;
 
-//    public List<Route> getAllRoutes(){
-//        return routeRepository.findAll();
-//    }
 
     @Transactional(readOnly = true)
-    public List<RouteSaveResponse> getAllRoutes() {
+    public List<RouteResponse> getAllRoutes() {
 
         return routeRepository.findAll()
                 .stream()
-                .map(route -> RouteSaveResponse.builder()
+                .map(route -> RouteResponse.builder()
                         .id(route.getId())
                         .arrivalAirport(route.getArrivalAirport().getLocation())
                         .departureAirport(route.getDepartureAirport().getLocation())
@@ -46,7 +43,8 @@ public class RouteService {
     }
 
 
-    public RouteSaveResponse save(RouteSaveRequest request) {
+    @Transactional
+    public RouteResponse save(RouteRequest request) {
         departureAirportNotNull(request);
         arrivalAirportNotNull(request);
 
@@ -61,7 +59,7 @@ public class RouteService {
                 .build();
 
         Route savedRoute = routeRepository.save(newRoute);
-        return RouteSaveResponse.builder()
+        return RouteResponse.builder()
                 .id(savedRoute.getId())
                 .departureAirport(savedRoute.getDepartureAirport().getLocation())
                 .arrivalAirport(savedRoute.getArrivalAirport().getLocation())
@@ -69,18 +67,18 @@ public class RouteService {
     }
 
 
-    public List<RouteSaveResponse> searchRoutesByDepartureAndArrival(String departure, String arrival) {
+    public List<RouteResponse> searchRoutesByDepartureAndArrival(String departure, String arrival) {
         List<Route> routes = routeRepository.findAllByDepartureAirportLocationAndArrivalAirportLocation(departure, arrival);
         routeNotFound(routes);
         return routes.stream()
-                .map(route -> RouteSaveResponse.builder()
+                .map(route -> RouteResponse.builder()
                         .id(route.getId())
                         .departureAirport(route.getDepartureAirport().getLocation())
                         .arrivalAirport(route.getArrivalAirport().getLocation())
                         .build()).toList();
     }
 
-    private void validateRouteConflict(RouteSaveRequest request) {
+    private void validateRouteConflict(RouteRequest request) {
         Long arrivalAirport = request.getArrivalAirport();
         Long departureAirport = request.getDepartureAirport();
         if (arrivalAirport == departureAirport) {
@@ -89,7 +87,7 @@ public class RouteService {
 
     }
 
-    private void checkIsRouteAlreadySaved(RouteSaveRequest request) {
+    private void checkIsRouteAlreadySaved(RouteRequest request) {
         Long arrivalAirport = request.getArrivalAirport();
         Long departureAirport = request.getDepartureAirport();
 
@@ -107,13 +105,13 @@ public class RouteService {
         }
     }
 
-    private void departureAirportNotNull(RouteSaveRequest request) {
+    private void departureAirportNotNull(RouteRequest request) {
         if (request.getDepartureAirport() == null) {
             throw new NotNullException("Departure airport " + NotNullException.NOT_NULL_EXCEPTION);
         }
     }
 
-    private void arrivalAirportNotNull(RouteSaveRequest request) {
+    private void arrivalAirportNotNull(RouteRequest request) {
         if (request.getArrivalAirport() == null) {
             throw new NotNullException("Arrival airport " + NotNullException.NOT_NULL_EXCEPTION);
         }

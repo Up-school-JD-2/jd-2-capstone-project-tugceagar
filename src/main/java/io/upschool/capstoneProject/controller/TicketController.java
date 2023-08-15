@@ -15,11 +15,11 @@ import java.util.List;
 @RequestMapping("api/tickets")
 @RequiredArgsConstructor
 public class TicketController {
+
     private final TicketService ticketService;
 
-
     @PostMapping
-    public ResponseEntity<BaseResponse<TicketSaveResponse>> createTicket(@RequestBody TicketSaveRequest ticket)  {
+    public ResponseEntity<BaseResponse<TicketSaveResponse>> createTicket(@RequestBody TicketSaveRequest ticket) {
         var ticketResponse = ticketService.save(ticket);
         var response = BaseResponse.<TicketSaveResponse>builder()
                 .status(HttpStatus.CREATED.value())
@@ -40,7 +40,6 @@ public class TicketController {
         return ResponseEntity.ok(response);
     }
 
-
     @GetMapping("{ticketNumber}")
     public ResponseEntity<BaseResponse<TicketSaveResponse>> getTicket(@PathVariable String ticketNumber) {
         TicketSaveResponse ticket = ticketService.findTicketByNumber(ticketNumber);
@@ -52,22 +51,16 @@ public class TicketController {
         return ResponseEntity.ok(response);
     }
 
-//    @DeleteMapping("{ticketNumber}")
-//    public String ticketCancel(@PathVariable("ticketNumber") String ticketNumber) {
-//        ticketService.ticketCancel(ticketNumber);
-//        return "Ticket is canceled.";
-//    }
-@DeleteMapping("/{ticketNumber}")
-public ResponseEntity<BaseResponse<String>> ticketCancel(@PathVariable("ticketNumber") String ticketNumber) {
-    ticketService.ticketCancel(ticketNumber);
+    @DeleteMapping("/{ticketNumber}")
+    public ResponseEntity<BaseResponse<String>> ticketCancel(@PathVariable("ticketNumber") String ticketNumber) {
+        ticketService.ticketCancel(ticketNumber);
 
-    BaseResponse<String> response = BaseResponse.<String>builder()
-            .status(HttpStatus.OK.value())
-            .isSuccess(true)
-            .data("Ticket is canceled.")
-            .build();
+        BaseResponse<String> response = BaseResponse.<String>builder()
+                .status(HttpStatus.OK.value())
+                .isSuccess(true)
+                .data("Ticket is canceled.")
+                .build();
 
-    return ResponseEntity.ok(response);
-}
-
+        return ResponseEntity.ok(response);
+    }
 }

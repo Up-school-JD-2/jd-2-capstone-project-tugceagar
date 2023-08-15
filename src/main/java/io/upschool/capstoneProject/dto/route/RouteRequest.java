@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RouteSaveRequest {
+public class RouteRequest {
 
     private Long departureAirport;
     private Long arrivalAirport;

@@ -9,12 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AirlineRepository extends JpaRepository<Airline,Long> {
-   // List<Airline> findAllByNameIs(String name);
+public interface AirlineRepository extends JpaRepository<Airline, Long> {
 
     @Query("SELECT a FROM Airline a WHERE lower(a.name) LIKE lower(concat('%', :name, '%'))")
-    List<Airline> findByName(@Param("name") String name); //elastic search
-
+    List<Airline> findByNameWithQuery(@Param("name") String name); //elastic search
 
     @Query(value = "select count(a) from Airline a " +
             "where a.name = :name")

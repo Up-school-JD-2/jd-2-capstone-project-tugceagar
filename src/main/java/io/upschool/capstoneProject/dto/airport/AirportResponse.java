@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class AirportSaveRequest {
+public class AirportResponse {
+    private Long id;
     private String name;
     private String location;
+
 }

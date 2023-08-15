@@ -1,16 +1,14 @@
 package io.upschool.capstoneProject.controller;
 
 import io.upschool.capstoneProject.dto.BaseResponse;
-import io.upschool.capstoneProject.dto.flight.FlightSaveRequest;
-import io.upschool.capstoneProject.dto.flight.FlightSaveResponse;
-import io.upschool.capstoneProject.service.AirlineService;
+import io.upschool.capstoneProject.dto.flight.FlightRequest;
+import io.upschool.capstoneProject.dto.flight.FlightResponse;
 import io.upschool.capstoneProject.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,21 +18,21 @@ public class FlightController {
     private final FlightService flightService;
 
 
-
     @GetMapping
-    public ResponseEntity<BaseResponse<List<FlightSaveResponse>>> getFlights(){
-            List<FlightSaveResponse> flights = flightService.getAllFlights();
-        BaseResponse<List<FlightSaveResponse>> response = BaseResponse.<List<FlightSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<FlightResponse>>> getFlights() {
+        List<FlightResponse> flights = flightService.getAllFlights();
+        BaseResponse<List<FlightResponse>> response = BaseResponse.<List<FlightResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(flights)
                 .build();
-            return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{airlineId}/flights")
-    public ResponseEntity<BaseResponse<List<FlightSaveResponse>>> getFlightsByAirlineId(@PathVariable Long airlineId)  {
-        List<FlightSaveResponse> flights= flightService.getFlightsByAirlineId(airlineId);
-        BaseResponse<List<FlightSaveResponse>> response = BaseResponse.<List<FlightSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<FlightResponse>>> getFlightsByAirlineId(@PathVariable Long airlineId) {
+        List<FlightResponse> flights = flightService.getFlightsByAirlineId(airlineId);
+        BaseResponse<List<FlightResponse>> response = BaseResponse.<List<FlightResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(flights)
@@ -43,22 +41,23 @@ public class FlightController {
     }
 
     @GetMapping("/searchFlights")
-    public ResponseEntity<BaseResponse<List<FlightSaveResponse>>> getFlightsByAirlineId(@RequestParam("airlineId") Long airlineId
-            ,@RequestParam("from") String departureAirport
-            ,@RequestParam("to") String arrivalAirport)  {
-        List<FlightSaveResponse> flights = flightService.searchDepartureAirportByAirlineId(airlineId,departureAirport,arrivalAirport);
-        BaseResponse<List<FlightSaveResponse>> response = BaseResponse.<List<FlightSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<FlightResponse>>> getFlightsByAirlineId(@RequestParam("airlineId") Long airlineId
+            , @RequestParam("from") String departureAirport
+            , @RequestParam("to") String arrivalAirport) {
+        List<FlightResponse> flights = flightService.searchDepartureAirportByAirlineId(airlineId, departureAirport, arrivalAirport);
+        BaseResponse<List<FlightResponse>> response = BaseResponse.<List<FlightResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(flights)
                 .build();
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/searchFlightsByRoute")
-    public ResponseEntity<BaseResponse<List<FlightSaveResponse>>> getFlightsByRoute(@RequestParam("from") String departureAirport
-            ,@RequestParam("to") String arrivalAirport) {
-        List<FlightSaveResponse> flights = flightService.searchFlightByRoute(departureAirport,arrivalAirport);
-        BaseResponse<List<FlightSaveResponse>> response = BaseResponse.<List<FlightSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<FlightResponse>>> getFlightsByRoute(@RequestParam("from") String departureAirport
+            , @RequestParam("to") String arrivalAirport) {
+        List<FlightResponse> flights = flightService.searchFlightByRoute(departureAirport, arrivalAirport);
+        BaseResponse<List<FlightResponse>> response = BaseResponse.<List<FlightResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(flights)
@@ -70,23 +69,21 @@ public class FlightController {
     @PostMapping("/{airlineId}/createFlight")
     public ResponseEntity<Object> createFlight(
             @PathVariable Long airlineId,
-            @RequestBody FlightSaveRequest request
-    )
-    {
-        FlightSaveResponse flightResponse = flightService.createFlightsByAirlineId(airlineId, request);
-        var response = BaseResponse.<FlightSaveResponse>builder()
+            @RequestBody FlightRequest request
+    ) {
+        FlightResponse flightResponse = flightService.createFlightsByAirlineId(airlineId, request);
+        var response = BaseResponse.<FlightResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .isSuccess(true)
                 .data(flightResponse)
                 .build();
         return ResponseEntity.ok(response);
     }
-
 
     @PostMapping
-    public ResponseEntity<Object> createFlights(@RequestBody FlightSaveRequest request) {
+    public ResponseEntity<Object> createFlights(@RequestBody FlightRequest request) {
         var flightResponse = flightService.save(request);
-        var response = BaseResponse.<FlightSaveResponse>builder()
+        var response = BaseResponse.<FlightResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .isSuccess(true)
                 .data(flightResponse)
@@ -94,8 +91,4 @@ public class FlightController {
         return ResponseEntity.ok(response);
 
     }
-
-
-
-
 }

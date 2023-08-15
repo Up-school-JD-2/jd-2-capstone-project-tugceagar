@@ -10,7 +10,7 @@ import io.upschool.capstoneProject.entity.CreditCard;
 import io.upschool.capstoneProject.entity.Flight;
 import io.upschool.capstoneProject.entity.Passenger;
 import io.upschool.capstoneProject.entity.Ticket;
-import io.upschool.capstoneProject.exception.*;
+import io.upschool.capstoneProject.exception.NotFoundException;
 import io.upschool.capstoneProject.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,65 +65,48 @@ public class TicketService {
         Passenger passenger = ticket.getPassenger();
         Flight flight = ticket.getFlight();
 
+
         CreditCardResponse creditCardResponse = CreditCardResponse.builder()
                 .cardNumber(card.getCardNumber()).build();
 
-        PassengerResponse passengerResponse = passengerService.entityToResponse(passenger);
+        PassengerResponse passengerSaveResponse = passengerService.entityToResponse(passenger);
 
 
         return TicketSaveResponse.builder()
                 .ticketNumber(ticket.getTicketNumber())
                 .price(ticket.getPrice())
                 .cardResponse(creditCardResponse)
-                .passengerResponse(passengerResponse)
+                .passengerResponse(passengerSaveResponse)
                 .arrivalLocation(flight.getRoute().getArrivalAirport().getLocation())
                 .departureLocation(flight.getRoute().getDepartureAirport().getLocation())
                 .build();
 
     }
 
-//@Transactional
-//    private Ticket requestToEntity(TicketSaveRequest request) {
-//        PassengerRequest passengerRequest = request.getPassengerRequest();
-//        CreditCardRequest cardRequest = request.getCardRequest();
-//        Flight flight = flightService.getFlight(request.getFlightId());
-//
-//        String maskedCardNumber = cardService.maskCardNumber(cardRequest.getCardNumber());
-//        cardRequest.setCardNumber(maskedCardNumber);
-//
-//        Passenger savedPassenger = passengerService.save(passengerRequest);
-//        CreditCard savedCard = cardService.save(cardRequest);
-//
-//        return ticketRepository.save(Ticket.builder()
-//                .price(request.getPrice())
-//                .card(savedCard)
-//                .passenger(savedPassenger)
-//                .flight(flight)
-//                .build());
-//    }
-private Ticket requestToEntity(TicketSaveRequest request) {
-    PassengerRequest passengerRequest = request.getPassengerRequest();
-    CreditCardRequest cardRequest = request.getCardRequest();
-    Flight flight = flightService.getFlight(request.getFlightId());
 
-    Passenger passenger = passengerService.findPassengerByTcNumber(passengerRequest.getTcNumber());
+    private Ticket requestToEntity(TicketSaveRequest request) {
+        PassengerRequest passengerRequest = request.getPassengerRequest();
+        CreditCardRequest cardRequest = request.getCardRequest();
+        Flight flight = flightService.getFlight(request.getFlightId());
 
-    if (passenger == null) {
-        passenger = passengerService.save(passengerRequest);
+        Passenger passenger = passengerService.findPassengerByTcNumber(passengerRequest.getTcNumber());
+
+        if (passenger == null) {
+            passenger = passengerService.save(passengerRequest);
+        }
+
+        String maskedCardNumber = cardService.maskCardNumber(cardRequest.getCardNumber());
+        cardRequest.setCardNumber(maskedCardNumber);
+
+        CreditCard savedCard = cardService.save(cardRequest);
+
+        return ticketRepository.save(Ticket.builder()
+                .price(request.getPrice())
+                .card(savedCard)
+                .passenger(passenger)
+                .flight(flight)
+                .build());
     }
-
-    String maskedCardNumber = cardService.maskCardNumber(cardRequest.getCardNumber());
-    cardRequest.setCardNumber(maskedCardNumber);
-
-    CreditCard savedCard = cardService.save(cardRequest);
-
-    return ticketRepository.save(Ticket.builder()
-            .price(request.getPrice())
-            .card(savedCard)
-            .passenger(passenger)
-            .flight(flight)
-            .build());
-}
 
     private void checkTicketExists(String ticketNumber) {
         Ticket ticket = ticketRepository.findByTicketNumber(ticketNumber);

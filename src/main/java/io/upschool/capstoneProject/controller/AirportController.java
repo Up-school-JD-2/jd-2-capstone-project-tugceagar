@@ -1,8 +1,8 @@
 package io.upschool.capstoneProject.controller;
 
 import io.upschool.capstoneProject.dto.BaseResponse;
-import io.upschool.capstoneProject.dto.airport.AirportSaveRequest;
-import io.upschool.capstoneProject.dto.airport.AirportSaveResponse;
+import io.upschool.capstoneProject.dto.airport.AirportRequest;
+import io.upschool.capstoneProject.dto.airport.AirportResponse;
 import io.upschool.capstoneProject.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,20 +19,21 @@ public class AirportController {
     private final AirportService airportService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse<List<AirportSaveResponse>>> getAllAirports(){
-        List<AirportSaveResponse> airports = airportService.getAllAirports();
-        BaseResponse<List<AirportSaveResponse>> response = BaseResponse.<List<AirportSaveResponse>>builder()
+    public ResponseEntity<BaseResponse<List<AirportResponse>>> getAllAirports() {
+        List<AirportResponse> airports = airportService.getAllAirports();
+        BaseResponse<List<AirportResponse>> response = BaseResponse.<List<AirportResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(airports)
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping ("/search")
-    public ResponseEntity<BaseResponse<List<AirportSaveResponse>>> searchAirlines(@RequestBody Map<String, String> request)  {
+
+    @GetMapping("/search")
+    public ResponseEntity<BaseResponse<List<AirportResponse>>> searchAirlines(@RequestBody Map<String, String> request) {
         String name = request.get("name");
-        List<AirportSaveResponse> airports = airportService.searchAirportByName(name);
-        BaseResponse<List<AirportSaveResponse>> response = BaseResponse.<List<AirportSaveResponse>>builder()
+        List<AirportResponse> airports = airportService.searchAirportByName(name);
+        BaseResponse<List<AirportResponse>> response = BaseResponse.<List<AirportResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .isSuccess(true)
                 .data(airports)
@@ -41,15 +42,14 @@ public class AirportController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createAirports(@RequestBody AirportSaveRequest request){
+    public ResponseEntity<Object> createAirports(@RequestBody AirportRequest request) {
         var airportResponse = airportService.save(request);
-        var response = BaseResponse.<AirportSaveResponse>builder()
+        var response = BaseResponse.<AirportResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .isSuccess(true)
                 .data(airportResponse)
                 .build();
         return ResponseEntity.ok(response);
     }
-
 
 }

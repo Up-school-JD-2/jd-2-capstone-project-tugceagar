@@ -18,5 +18,4 @@ public class TicketSaveRequest {
     private CreditCardRequest cardRequest;
     private PassengerRequest passengerRequest;
 
-
 }

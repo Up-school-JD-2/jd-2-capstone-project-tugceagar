@@ -14,10 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class PassengerService {
 
     private final PassengerRepository passengerRepository;
-//createPassenger
-//public responseToEntity
 
-@Transactional
+
+    @Transactional
     public Passenger save(PassengerRequest request) {
         validateTcNumber(request);
         return requestToEntity(request);
@@ -29,15 +28,14 @@ public class PassengerService {
     }
 
 
-    @Transactional
     public PassengerResponse entityToResponse(Passenger passenger) {
         return PassengerResponse.builder()
-                //.id(passenger.getId())
                 .name(passenger.getName())
                 .surname(passenger.getSurname())
                 .build();
     }
-@Transactional
+
+    @Transactional
     private Passenger requestToEntity(PassengerRequest request) {
         return passengerRepository.save(Passenger.builder()
                 .tcNumber(request.getTcNumber())

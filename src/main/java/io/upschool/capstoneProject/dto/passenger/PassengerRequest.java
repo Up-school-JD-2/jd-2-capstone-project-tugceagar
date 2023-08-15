@@ -17,6 +17,4 @@ public class PassengerRequest {
 
     private String tcNumber;
 
-   // private Long ticketId;
-
 }

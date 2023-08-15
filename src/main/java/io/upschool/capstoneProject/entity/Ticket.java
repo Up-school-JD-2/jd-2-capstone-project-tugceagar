@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Entity
+@Table(name = "tickets")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,31 +22,27 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name = "price")
     private Double price;
 
-//    @Column(name = "seat_number")
-//    private String seatNumber;
-    @Builder.Default//ticket bulunamadı
+    @Builder.Default
     @Column(name = "ticket_number")
-    private String ticketNumber = new Random().ints(4, 48, 123)
-        .filter(i -> (i < 58 || (i > 64 && i < 91) || (i > 96)))
-        .mapToObj(i -> String.valueOf((char) i))
-        .collect(Collectors.joining());
+    private String ticketNumber = UUID.randomUUID().toString().substring(0, 8);
 
     @Column(name = "is_active")
     @Builder.Default
     private Boolean isActive = true;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "card_id")
     private CreditCard card;
 

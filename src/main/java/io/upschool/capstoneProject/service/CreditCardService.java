@@ -1,12 +1,14 @@
 package io.upschool.capstoneProject.service;
 
 import io.upschool.capstoneProject.dto.CreditCard.CreditCardRequest;
-import io.upschool.capstoneProject.entity.*;
+import io.upschool.capstoneProject.dto.CreditCard.CreditCardResponse;
+import io.upschool.capstoneProject.entity.CreditCard;
 import io.upschool.capstoneProject.exception.creditcard.InvalidCardNumberException;
 import io.upschool.capstoneProject.exception.creditcard.InvalidCcvException;
 import io.upschool.capstoneProject.exception.creditcard.InvalidExpirationMonthException;
 import io.upschool.capstoneProject.exception.creditcard.InvalidExpirationYearException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 
@@ -14,7 +16,7 @@ import java.util.Calendar;
 
 public class CreditCardService {
 
-
+    @Transactional
     public CreditCard save(CreditCardRequest card) {
         validateCardNumber(card);
         validateCcvNumber(card);
@@ -22,6 +24,11 @@ public class CreditCardService {
         validateExpirationMonth(card);
 
         return requestToEntity(card);
+    }
+
+    public CreditCardResponse entityToResponse(CreditCard card) {
+        return CreditCardResponse.builder()
+                .cardNumber(card.getCardNumber()).build();
     }
 
 

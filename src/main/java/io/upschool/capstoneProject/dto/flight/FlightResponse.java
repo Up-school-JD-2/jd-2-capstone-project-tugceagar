@@ -12,11 +12,14 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FlightSaveRequest {
+public class FlightResponse {
 
+    private Integer capacity;
     private Integer duration;
     private LocalDate date;
     private LocalTime time;
     private Long routeId;
     private Long airlineId;
+    private String departureAirport;
+    private String arrivalAirport;
 }

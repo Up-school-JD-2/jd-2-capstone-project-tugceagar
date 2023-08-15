@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "passengers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class Passenger {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tc_number") //exception
+    @Column(name = "tc_number")
     private String tcNumber;
 
     @Column(name = "name")
@@ -26,8 +27,5 @@ public class Passenger {
     @Column(name = "surname")
     private String surname;
 
-//    @OneToOne(mappedBy = "passenger")
-//    @JoinColumn(name = "passenger_ticket")
-//    private Ticket ticket;
 
 }

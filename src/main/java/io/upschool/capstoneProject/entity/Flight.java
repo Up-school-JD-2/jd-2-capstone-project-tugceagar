@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+@Table(name = "flights")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Flight {
 
     @Builder.Default
     @Column(name = "capacity")
-    private Integer capacity = 3; //kapasite dolu
+    private Integer capacity = 3;
 
     @Column(name = "duration")
     private Integer duration;
@@ -33,13 +34,13 @@ public class Flight {
     @Column(name = "time")
     private LocalTime time;
 
-    @ManyToOne(fetch =FetchType.LAZY )
-    @JoinColumn(name = "route_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    @ManyToOne(fetch =FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "airline_id", nullable = false)
-    private Airline airline;
+    private Airline airline; //many to many
 
 
 }

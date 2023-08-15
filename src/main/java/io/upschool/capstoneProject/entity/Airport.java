@@ -6,8 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
+@Table(name = "airports")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,17 +22,13 @@ public class Airport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="airport_name",unique = true)
-    private String name; //name yok exception
+    @Column(name = "airport_name", unique = true)
+    private String name;
 
     @Column(name = "location")
     private String location;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "airport_airlines",nullable = false)
-//    private Airline airline;
-
-//    @ManyToMany(mappedBy = "airports")
-//    private Set<Airline> airlines = new HashSet<>();
+    @ManyToMany(mappedBy = "airports")
+    private Set<Airline> airlines = new HashSet<>();
 
 }

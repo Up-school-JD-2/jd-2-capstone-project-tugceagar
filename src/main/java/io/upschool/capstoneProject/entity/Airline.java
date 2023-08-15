@@ -6,9 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Data
+@Table(name = "airlines")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,18 +25,12 @@ public class Airline {
     @Column(name = "name", unique = true)
     private String name;
 
-//    @OneToMany(mappedBy = "airline")
-//    private List<Flight> flights = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "airline_airport",
+            joinColumns = @JoinColumn(name = "airline_id"),
+            inverseJoinColumns = @JoinColumn(name = "airport_id")
+    )
+    private Set<Airport> airports = new HashSet<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "airline_airports",nullable = false)
-//    private Airport airport;
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-//    @JoinTable(
-//            name = "airline_airport",
-//            joinColumns = @JoinColumn(name = "airline_id"),
-//            inverseJoinColumns = @JoinColumn(name = "airport_id")
-//    )
-//    private Set<Airport> airports = new HashSet<>();
 }

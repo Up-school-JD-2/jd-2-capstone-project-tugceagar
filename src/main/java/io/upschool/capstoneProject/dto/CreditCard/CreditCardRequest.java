@@ -15,10 +15,9 @@ public class CreditCardRequest {
 
     private String ccv;
 
-    private String  expirationMonth;
+    private String expirationMonth;
 
     private String expirationYear;
-
 
 
 }
